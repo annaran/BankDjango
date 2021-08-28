@@ -1,0 +1,17 @@
+{% extends "bank_app/base.html" %} {% block title %} index page {% endblock %}
+{% block content %}
+<h2>Notify customers:</h2>
+
+<form action="{% url 'bank_app:send_notification' %}" method="POST">
+	{% csrf_token %}
+	<div class="form-row">
+		<div class="form-group col-md-6">
+			<label for="message">Message</label>
+			<textarea class="form-control" name="message" id="message"> </textarea>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-outline-secondary">
+		Send notification
+	</button>
+</form>
+{% endblock %}

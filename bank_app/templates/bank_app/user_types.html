@@ -1,0 +1,38 @@
+{% extends "bank_app/base.html" %} {% block title %} User ranks page {% endblock %}
+{% block nav_ranks%}active{% endblock %}
+
+{% block content %}
+  <h2>User ranks list</h2>
+  <table class="table">
+    <tr>
+      <th>User type</th>
+      <th>Loan permision</th>
+    </tr>
+    {% for item in userType %}
+    <tr>
+      <td>{{ item.text }}</td>
+      <td>{{ item.loan_permission }}</td>
+    </tr>
+    {% endfor %}  
+  </table>
+    <h3>Create user rank</h3>
+    <form class="create-account-form" action="{% url 'bank_app:user_types' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="user_type">User rank name</label>
+          <input type="text" name="user_type" id="user_type" placeholder="eg. Gold" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="loan_permission">Loan permission</label>
+          <select name="loan_permission" id="loan_permission">
+            <option value="true">true</option>
+            <option value="false">false</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline-secondary">Create user rank</button>
+    </form>
+{% endblock %}

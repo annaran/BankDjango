@@ -1,0 +1,74 @@
+.create-user-form,
+.create-account-form {
+  margin: 0px auto 100px 0px !important;
+}
+
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #444444;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+ul {
+  margin: 0;
+}
+
+.bg-steel {
+  background-color: #333333;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+a {
+  color: #df6017;
+  text-decoration: none;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.navbar p {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+.active {
+  text-decoration: underline;
+}

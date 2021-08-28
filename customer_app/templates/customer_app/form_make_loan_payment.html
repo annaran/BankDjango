@@ -1,0 +1,59 @@
+{% extends "customer_app/base.html" %}
+
+{% block content %}
+
+
+<h1>Make loan payment</h1>
+
+<form action="{% url 'customer_app:form_make_loan_payment' %}" method="POST">
+{% csrf_token %}
+<div class="input-group mb-3">
+  <select class="custom-select" id="inputGroupSelect02" name="loan_account_number">
+    <option selected>Choose loan</option>
+      {% for loan in loans %}
+      <option value={{ loan.account_number }}>{{ loan.account_number }}</option>
+      {% endfor %}
+  </select>
+  <div class="input-group-append">
+    <label class="input-group-text" for="inputGroupSelect02">Options</label>
+  </div>
+</div>
+
+
+<div class="input-group mb-3">
+  <select class="custom-select" id="inputGroupSelect02" name="standard_account_number">
+    <option selected>Choose account to pay from</option>
+      {% for account in accounts %}
+      <option value={{ account.account_number }}>{{ account.account_number }}</option>
+      {% endfor %}
+  </select>
+  <div class="input-group-append">
+    <label class="input-group-text" for="inputGroupSelect02">Options</label>
+  </div>
+</div>
+
+
+
+<div class="input-group mb-3">
+
+
+  <input type="text" class="form-control" name="amount" placeholder="Enter amount to pay">
+    <div class="input-group-append">
+    <span class="input-group-text">DKK</span>
+
+  </div>
+ 
+   
+
+
+</div>
+
+ <button class="btn btn-outline-secondary" type="submit">Make payment</button>
+</form>
+
+{% endblock %}
+
+{% block footer %}
+
+
+{% endblock %}

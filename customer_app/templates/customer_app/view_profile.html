@@ -1,0 +1,50 @@
+{% extends "customer_app/base.html" %} {% block content %}
+
+<h1>Profile</h1>
+
+<table class="table table-sm">
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">Username</th>
+      <td>{{ customer.0.username }}</td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">First name</th>
+      <td>{{ customer.0.first_name }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Last name</th>
+      <td>{{ customer.0.last_name }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Phone number</th>
+      <td>{{ phone_number }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Email</th>
+      <td>{{ customer.0.email }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Customer since</th>
+      <td>{{ customer.0.date_joined }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Customer rank</th>
+      <td>{{ user_rank }}</td>
+    </tr>
+
+    <tr>
+      <th scope="row">
+        <a href="{% url 'login_app:password_change' %}">Change my password</a>
+      </th>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

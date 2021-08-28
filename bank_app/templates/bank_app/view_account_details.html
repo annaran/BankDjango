@@ -1,0 +1,57 @@
+{% extends "bank_app/base.html" %} {% block content %}
+
+<h1>Account details</h1>
+
+<table class="table table-sm">
+	<tbody>
+		<tr class="table-active">
+			<th scope="row">Account number</th>
+			<td>{{ account.account_number}}</td>
+		</tr>
+		<tr class="table-secondary">
+			<th scope="row">Account balance</th>
+			<td>{{ account.balance}}</td>
+		</tr>
+		<tr class="table-secondary">
+			<th scope="row">Creation date</th>
+			<td>{{ account.open_date}}</td>
+		</tr>
+
+		<tr class="table-secondary">
+			<th scope="row">Account type</th>
+			<td>{{ account.account_type}}</td>
+		</tr>
+	</tbody>
+</table>
+<a href="../generate_pdf_with_account_details/{{ account.id}}"
+	>generate pdf with account details</a
+>
+<h3>Account transactions</h3>
+
+<table class="table table-sm">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+
+			<th scope="col">Amount</th>
+			<th scope="col">Description</th>
+			<th scope="col">Date</th>
+			<th scope="col">Transaction id</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in accountTransactions %}
+		<tr>
+			<th scope="row"></th>
+
+			<td>{{ item.ammount }}</td>
+
+			<td>{{ item.description }}</td>
+			<td>{{ item.date }}</td>
+			<td>{{ item.transaction_id }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %} {% block footer %} {% endblock %}

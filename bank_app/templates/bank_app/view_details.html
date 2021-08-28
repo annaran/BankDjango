@@ -1,0 +1,60 @@
+{% extends "bank_app/base.html" %} {% block title %} Customer detail page {% endblock %}
+{% block content %}
+<h2>Customer info:</h2>
+<table class="table table-sm">
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">Username</th>
+      <td>{{ user_details.username }} </td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">Full name</th>
+      <td>{{ user_details.first_name }} {{ user_details.last_name }}</td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">Phone number</th>
+      <td>{{ phone_number }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Customer since</th>
+      <td>{{ user_details.date_joined }}</td>
+    </tr>
+
+    <tr class="table-secondary">
+      <th scope="row">Customer rank</th>
+      <td>{{ user_rank }}</td>
+    </tr>
+  </tbody>
+</table>
+  {% if bank_accounts %}
+  <h3>Active accounts:</h3>
+  <table class="table table-sm">
+    <tr>
+      <th>Number</th>
+      <th>Balance</th>
+      <th>Open date</th>
+    </tr>
+    {% for item in bank_accounts %}
+    <tr>
+      <td>{{ item.account_number }}</td>
+      <td> {{ item.balance }} </td>
+      <td>{{ item.open_date }}</td>
+      <td><a href="{% url 'bank_app:view_account_details' item.id %}">Details</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+  <h3>Create user's account:</h3>
+  <form class="create-account-form" action="{% url 'bank_app:create_account' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="password">Initial amount</label>
+        <input type="hidden" name="name_user_id" value= "{{ user_details.id }}" />
+        <input type="number" name="initial_ammount" placeholder="initial ammount" class="form-control" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Create account</button>
+  </form>
+{% endblock %}

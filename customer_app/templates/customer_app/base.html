@@ -1,0 +1,221 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<!-- Bootstrap CSS -->
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{% static 'customer_app/style.css' %}"
+		/>
+
+		<title>Bank</title>
+	</head>
+	<body>
+		<header class="site-header">
+			<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+				<div class="container">
+					<a
+						class="navbar-brand mr-4"
+						href="{% url 'customer_app:view_profile' %}"
+						>Bank home</a
+					>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarToggle"
+						aria-controls="navbarToggle"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarToggle">
+						<div class="navbar-nav mr-auto">
+							<a
+								class="nav-item nav-link"
+								href="{% url 'customer_app:view_profile' %}"
+								>Profile</a
+							>
+							<a
+								class="nav-item nav-link"
+								href="{% url 'customer_app:view_my_accounts' %}"
+								>My accounts</a
+							>
+
+							<!-- Default dropright button -->
+							<div class="btn-group dropright">
+								<button
+									type="button"
+									class="btn btn-secondary dropdown-toggle"
+									data-toggle="dropdown"
+									aria-haspopup="true"
+									aria-expanded="false"
+								>
+									Select action
+								</button>
+								<div class="dropdown-menu">
+									<!-- Dropdown menu links -->
+
+									<a
+										class="dropdown-item"
+										href="{% url 'customer_app:form_transfer_money' %}"
+										>Transfer money</a
+									>
+
+									<a
+										class="dropdown-item"
+										href="{% url 'customer_app:form_make_loan_payment' %}"
+										>Loan payment</a
+									>
+
+									<a
+										class="dropdown-item"
+										href="{% url 'customer_app:form_take_a_loan' %}"
+										>Take loan</a
+									>
+								</div>
+							</div>
+						</div>
+						<!-- Navbar Right Side -->
+						<div class="navbar-nav">
+							<a class="nav-item nav-link" href="{% url 'login_app:logout' %}"
+								>Log out ({{ user.first_name }} {{ user.last_name }})</a
+							>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<main role="main" class="container position-relative">
+			<div class="notification-wrap"></div>
+			<div class="row">
+				<!-- message alerts -->
+				{% for message in messages %}
+				<div class="container-fluid p-0">
+					<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+						<button
+							type="button"
+							class="close"
+							data-dismiss="alert"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+						{{ message }}
+					</div>
+				</div>
+				{% endfor %}
+
+				<div class="col-md-12">{% block content %} {% endblock %}</div>
+			</div>
+		</main>
+
+		{% block footer %} {% endblock %}
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script
+			src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"
+		></script>
+		<script>
+			const socket = new WebSocket(
+				"ws://" + window.location.host + "/ws/notifications"
+			);
+
+			// Socket On receive message Functionality
+			socket.onmessage = function (e) {
+				const element = `<div class="notification">
+				<div id="close_notification"> x </div>
+				<p>${e.data}</p>
+				</div>`;
+				document
+					.querySelector(".notification-wrap")
+					.insertAdjacentHTML("afterbegin", element);
+
+				document.querySelectorAll("#close_notification").forEach((e, i) => {
+					e.addEventListener("click", () => {
+						e.parentElement.style.display = "none";
+					});
+				});
+			};
+
+			// Socket Connet Functionality
+			socket.onopen = function (e) {
+				console.log("open", e);
+			};
+
+			// Socket Error Functionality
+			socket.onerror = function (e) {
+				console.log("error", e);
+			};
+
+			// Socket close Functionality
+			socket.onclose = function (e) {
+				console.log("closed", e);
+			};
+
+			const socketTransfer = new WebSocket(
+				"ws://" + window.location.host + "/ws/transferNotifications"
+			);
+
+			// SocketTransfer On receive message Functionality
+			socketTransfer.onmessage = function (e) {
+				const element = `<div class="notification">
+				<div id="close_notification"> x </div>
+				<p>${e.data}</p>
+				</div>`;
+				document
+					.querySelector(".notification-wrap")
+					.insertAdjacentHTML("afterbegin", element);
+
+				document.querySelectorAll("#close_notification").forEach((e, i) => {
+					e.addEventListener("click", () => {
+						e.parentElement.style.display = "none";
+					});
+				});
+			};
+
+			// SocketTransfer Connet Functionality
+			socketTransfer.onopen = function (e) {
+				console.log("open", e);
+			};
+
+			// SocketTransfer Error Functionality
+			socketTransfer.onerror = function (e) {
+				console.log("error", e);
+			};
+
+			// SocketTransfer close Functionality
+			socketTransfer.onclose = function (e) {
+				console.log("closed", e);
+			};
+		</script>
+	</body>
+</html>

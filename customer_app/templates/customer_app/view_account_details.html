@@ -1,0 +1,53 @@
+{% extends "customer_app/base.html" %} {% block content %}
+
+<h1>Account details</h1>
+
+<table class="table table-sm">
+	<tbody>
+		<tr class="table-active">
+			<th scope="row">Account number</th>
+			<td>{{ account.0.account_number}}</td>
+		</tr>
+		<tr class="table-secondary">
+			<th scope="row">Account balance</th>
+			<td>{{ accountBalance.0.ammount}}</td>
+		</tr>
+		<tr class="table-secondary">
+			<th scope="row">Creation date</th>
+			<td>{{ account.0.open_date}}</td>
+		</tr>
+
+		<tr class="table-secondary">
+			<th scope="row">Account type</th>
+			<td>{{ account.0.account_type}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Account transactions</h3>
+
+<table class="table table-sm">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+
+			<th scope="col">Amount</th>
+			<th scope="col">Description</th>
+			<th scope="col">Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in accountTransactions %}
+		<tr>
+			<th scope="row"></th>
+
+			<td>{{ item.ammount }}</td>
+
+			<td>{{ item.description }}</td>
+			<td>{{ item.date }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %} {% block footer %} {% endblock %}

@@ -1,0 +1,24 @@
+{% extends "bank_app/base.html" %} {% block title %} Accounts page {% endblock %}
+{% block nav_accounts%}active{% endblock %}
+{% block content %}
+<h2>Active accounts:</h2>
+
+<table class="table">
+  <tr>
+    <th scope="col">User</th>
+    <th scope="col">Number</th>
+    <th scope="col">Balance</th>
+  </tr>
+
+  {% for item in bankAcccounts %}
+  <tr>
+    <td>{{ item.user_id }}</td>
+    <td>{{ item.account_number }}</td>
+    <td>
+      {% if item.ammount %} {{ item.ammount }} {% else %} 0.00 {% endif %}
+    </td>
+    <td><a href="{% url 'bank_app:view_account_details' item.id %}">Details</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "bank_app/base.html" %} {% block title %} Customers page {% endblock %}
+{% block nav_users%} active {% endblock %}
+
+{% block content %}
+<h2>Active users:</h2>
+
+<table class="table">
+  <tr>
+    <th scope="col">User id</th>
+    <th scope="col">User name</th>
+    <th scope="col">First name</th>
+    <th scope="col">Last name</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.first_name }}</td>
+    <td>{{ user.last_name }}</td>
+    <td><a href="{{ user.id }}">Details</a></td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="../create_user"> Create user </a>
+{% endblock %}

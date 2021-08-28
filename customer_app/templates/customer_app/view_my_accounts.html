@@ -1,0 +1,58 @@
+{% extends "customer_app/base.html" %}
+
+{% block content %}
+
+
+<h1>My accounts</h1>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Account number</th>
+      <th scope="col">Account balance</th>
+      <th scope="col">Open date</th>
+      <th scope="col">Type</th>
+      <th scope="col"></th>
+    
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in bankAccounts %}
+    <tr>
+      <th scope="row"></th>
+      <td>{{ item.account_number }}</td>
+      <td>{% if item.balance %} {{ item.balance }} {% else %} 0.00 {% endif %}</td>
+      <td>{{ item.open_date }}</td>
+      <td>{{ item.account_type }}</td>
+            <td><a
+                class="nav-item nav-link"
+                href="{% url 'customer_app:view_account_details' item.id %}"
+                >Details</a
+              ></td>
+{% comment %}                           <td><a
+                class="nav-item nav-link"
+                href="{% url 'customer_app:form_transfer_money' %}"
+                >Transfer</a
+              ></td> {% endcomment %}
+
+    </tr>
+
+
+
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+
+{% endblock %}
+
+{% block footer %}
+{% comment %} <a href="{% url 'customer_app:view_profile' %}">Profile</a> {% endcomment %}
+
+{% endblock %}

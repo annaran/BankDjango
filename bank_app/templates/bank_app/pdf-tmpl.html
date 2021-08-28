@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style type="text/css">
+			th,
+			td {
+				text-align: left;
+			}
+			.account-details {
+				width: 10cm;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Account details</h1>
+
+		<table class="account-details">
+			<tbody>
+				<tr>
+					<th style="width: 15%">Account number</th>
+					<td>{{ account.0.account_number}}</td>
+				</tr>
+				<tr>
+					<th style="width: 15%">Account balance</th>
+					<td>{{ accountBalance.0.ammount}}</td>
+				</tr>
+				<tr class="table-secondary">
+					<th style="width: 15%">Creation date</th>
+					<td>{{ account.0.open_date}}</td>
+				</tr>
+
+				<tr>
+					<th style="width: 15%">Account type</th>
+					<td>{{ account.0.account_type}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<h3>Account transactions</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>#</th>
+
+					<th>Amount</th>
+					<th>Description</th>
+					<th>Date</th>
+					<th>Corresponding account</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in accountTransactions %}
+				<tr>
+					<th></th>
+
+					<td>{{ item.ammount }}</td>
+
+					<td>{{ item.description }}</td>
+					<td>{{ item.date }}</td>
+					<td>{{ item.corresponding_account }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</body>
+</html>
